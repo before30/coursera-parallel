@@ -17,6 +17,7 @@ object ParallelParenthesesBalancingRunner {
     Key.verbose -> true
   ) withWarmer(new Warmer.Default)
 
+
   def main(args: Array[String]): Unit = {
     val length = 100000000
     val chars = new Array[Char](length)

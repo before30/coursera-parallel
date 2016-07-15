@@ -31,6 +31,7 @@ class ParallelCountChangeSuite extends FunSuite {
     check(List())
     check(List(1, 2, 3))
     check(List.range(1, 100))
+    
   }
 
   test("countChange should return 0 for money > 0 and coins = List()") {
