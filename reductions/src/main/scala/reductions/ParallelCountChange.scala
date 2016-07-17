@@ -46,7 +46,13 @@ object ParallelCountChange {
    *  coins for the specified amount of money.
    */
   def countChange(money: Int, coins: List[Int]): Int = {
-    ???
+    money match {
+      case m if money < 0 => 0
+      case m if money == 0 => 1
+      case m if coins.isEmpty => 0
+      case m => countChange(m - coins.head, coins) + countChange(m, coins.tail)
+    }
+
   }
 
   type Threshold = (Int, List[Int]) => Boolean
