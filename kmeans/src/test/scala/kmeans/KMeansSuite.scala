@@ -71,6 +71,12 @@ class KMeansSuite extends FunSuite {
     checkParClassify(points, means, expected)
   }
 
+  test("'conversed?") {
+    val mean1 = new Point(1, 0, 0)
+    val mean2 = new Point(-1, 0, 0)
+    assert(converged(0)(IndexedSeq(mean1), IndexedSeq(mean2)) == false)
+    assert(converged(5)(IndexedSeq(mean1), IndexedSeq(mean2)) == true)
+  }
 }
 
 
