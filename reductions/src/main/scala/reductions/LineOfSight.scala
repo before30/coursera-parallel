@@ -3,6 +3,8 @@ package reductions
 import org.scalameter._
 import common._
 
+import scala.annotation.tailrec
+
 object LineOfSightRunner {
   
   val standardConfig = config(
@@ -53,7 +55,16 @@ object LineOfSight {
   /** Traverses the specified part of the array and returns the maximum angle.
    */
   def upsweepSequential(input: Array[Float], from: Int, until: Int): Float = {
-    ???
+    @tailrec
+    def loop(idx: Int, maxAngle: Float): Float = {
+      if (idx >= until) maxAngle
+      else {
+        if (idx == 0) loop(idx+1, 0)
+        else loop(idx+1, max( maxAngle, input(idx) / idx))
+      }
+    }
+
+    loop(from, 0F)
   }
 
   /** Traverses the part of the array starting at `from` and until `end`, and
@@ -75,7 +86,21 @@ object LineOfSight {
    */
   def downsweepSequential(input: Array[Float], output: Array[Float],
     startingAngle: Float, from: Int, until: Int): Unit = {
-    ???
+    @tailrec
+    def loop(idx: Int, maxAngle: Float): Unit = {
+      if (idx >= until) return
+      else {
+        if (idx == 0) {
+          output(idx) = maxAngle
+          loop(idx+1, maxAngle)
+        } else {
+          output(idx) = max(input(idx) / idx, maxAngle)
+          loop(idx+1, output(idx))
+        }
+      }
+    }
+
+    loop(from, startingAngle)
   }
 
   /** Pushes the maximum angle in the prefix of the array to each leaf of the
